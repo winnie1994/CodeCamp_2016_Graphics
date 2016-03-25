@@ -15,9 +15,15 @@ public class Shooter_Controller : MonoBehaviour {
 	{
 		if (Input.GetButtonDown("Fire1"))
 		{
+<<<<<<< Updated upstream
 			Rigidbody2D instantiated_bullet = Instantiate(bullet,transform.position, transform.rotation)as Rigidbody2D;
 			instantiated_bullet.velocity = transform.TransformDirection(new Vector2(0,speed));
 
+=======
+			Rigidbody2D instantiated_bullet = Instantiate(bullet,transform.position, transform.rotation) as Rigidbody2D;
+			instantiated_bullet.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(new Vector2(0,speed));
+			Physics2D.IgnoreCollision(instantiated_bullet.GetComponent<Collider2D>(),gameObject.GetComponent<Collider2D>());
+>>>>>>> Stashed changes
 		}
 	}
 }
