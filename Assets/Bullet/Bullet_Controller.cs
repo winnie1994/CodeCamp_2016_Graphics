@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Bullet_Controller : BaseClass {
-	public Color initial_color = new Color (1f, 0.75f, 0.9f, 1.0f);
+	public Color initial_color = new Color (1f, 0.9f, 1f, 1.0f);
 
 	void Start () {
 		SetColor (initial_color);

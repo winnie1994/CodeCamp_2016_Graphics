@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Movement_Controller : BaseClass {
 
-	public float horizontal_speed = 0.1f;
+	public float max_speed = 10f;
 
 	//all in degrees
 	public float initial_angle = 0f;
@@ -27,14 +27,10 @@ public class Movement_Controller : BaseClass {
 	
 	// FILL IN
 	void Update () {
-		if (Input.GetKeyDown ("z") && angle < max_angle)
-			RotateLeft ();
-		if (Input.GetKeyDown ("x") && angle > min_angle)
-			RotateRight ();
-		if (Input.GetKey ("right") && position < right_boundary)
-			MoveRight ();
-		if (Input.GetKey ("left") && position > left_boundary)
-			MoveLeft ();
+		float horizontal_input = Input.GetAxis ("Horizontal");
+		float vertical_input = Input.GetAxis ("Vertical");
+		Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D> ();
+		rb.velocity = new Vector2(max_speed*horizontal_input, max_speed*vertical_input);
 		
 	}
 
@@ -44,26 +40,6 @@ public class Movement_Controller : BaseClass {
 		//SetColor (Color.red);
 		MoveTo(initial_position);
 		//SetColor (Color.white);
-	}
-		
-	void MoveRight() {
-		position += horizontal_speed;
-		MoveTo (position);
-	}
-
-	void MoveLeft() {
-		position -= horizontal_speed;
-		MoveTo (position);
-	}
-
-	void RotateLeft() {
-		angle += delta_angle;
-		RotateTo (angle + delta_angle);
-	}
-
-	void RotateRight() {
-		angle -= delta_angle;
-		RotateTo (angle - delta_angle);
 	}
 
 }

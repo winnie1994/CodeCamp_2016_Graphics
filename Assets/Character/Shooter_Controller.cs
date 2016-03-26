@@ -4,7 +4,7 @@ using System.Collections;
 public class Shooter_Controller : BaseClass {
 
 	public Rigidbody2D bullet;
-	public float speed = 20;
+	public float speed = 10;
 
 	void Start () {
 
