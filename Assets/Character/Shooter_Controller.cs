@@ -17,6 +17,7 @@ public class Shooter_Controller : MonoBehaviour {
 		{
 			Rigidbody2D instantiated_bullet = Instantiate(bullet,transform.position, transform.rotation)as Rigidbody2D;
 			instantiated_bullet.velocity = transform.TransformDirection(new Vector2(0,speed));
+
 		}
 	}
 }

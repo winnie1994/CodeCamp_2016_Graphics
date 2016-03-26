@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class EnemySpawner_Level1 : MonoBehaviour {
-	public GameObject enemy;
+	public Rigidbody2D enemy;
 	public Vector2 spawn_range;
 	public int enemy_count;
 	public float spawn_interval;
@@ -22,12 +22,14 @@ public class EnemySpawner_Level1 : MonoBehaviour {
 		{
 			for (int i = 0; i < enemy_count; ++i)
 			{
-				Vector2 spawn_position = new Vector2 (Random.Range (-spawn_range.x, spawn_range.x), Random.Range (-spawn_range.y, spawn_range.y));
+				Vector2 spawn_position = new Vector2 (Random.Range (-spawn_range.x, spawn_range.x), Random.Range (0.5f*(spawn_range.y), spawn_range.y));
 				Quaternion spawn_rotation = Quaternion.AngleAxis(Random.Range(0,360), Vector3.forward);
-				Instantiate (enemy, spawn_position,spawn_rotation);
-				yield return new WaitForSeconds (spawn_interval);
+
+                Rigidbody2D instantiated_enemy = Instantiate (enemy, spawn_position,spawn_rotation) as Rigidbody2D;
+                instantiated_enemy.velocity = transform.TransformDirection(new Vector2(0, -1));
+
+                yield return new WaitForSeconds (spawn_interval);
 			}
-			//while (!trigger_next_wave) {}//TODO: Badbadbad, find better thing to do
 			yield return new WaitForSeconds (wave_interval);
 		}
 	}
