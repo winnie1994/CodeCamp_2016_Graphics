@@ -8,10 +8,12 @@ public class Scoreboard_Controller : MonoBehaviour {
 	public int health;
 	public int lives;
 
+
 	public void Start ()
 	{
 		score = 0;
 		UpdateScore ();
+		UpdateLives ();
 	}
 
 	public void AddToScore(int amount)
@@ -22,17 +24,24 @@ public class Scoreboard_Controller : MonoBehaviour {
 		
 	public void UpdateScore ()
 	{
-		gameObject.GetComponent<Text>().text = "Score: " + score;
+		GameObject.Find("Score").GetComponent<Text>().text = "Score: " + score;
 	}
 
 	public void LoseLife()
 	{
 		lives--;
+		UpdateLives ();
 	}
 
 	public void GainLife()
 	{
 		lives++;
+		UpdateLives ();
+	}
+
+	public void UpdateLives ()
+	{
+		GameObject.Find("Lives").GetComponent<Text>().text = "Lives: " + lives;
 	}
 
 }

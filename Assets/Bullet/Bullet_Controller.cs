@@ -29,8 +29,9 @@ public class Bullet_Controller : MonoBehaviour {
 		if (tag == "MainCharacter")return;
 		if (tag == "Enemy") {
 			Scoreboard_Controller scoreboard = GameObject.Find("GameController_Object").GetComponent<Scoreboard_Controller>();
-			scoreboard.AddToScore (10);
+
 			collision.gameObject.SendMessage ("BulletHit", renderer.color);
+			scoreboard.AddToScore (10);
 			Destroy (gameObject);
 
 		}if (tag == "Bullet" || tag == "ColorBlock") {
