@@ -1,23 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Shooter_Controller : MonoBehaviour {
+public class Shooter_Controller : BaseClass {
 
 	public Rigidbody2D bullet;
 	public float speed = 20;
-	// Use this for initialization
+
 	void Start () {
 
 	}
 
-	// Update is called once per frame
+	// Fill In
 	void Update ()
 	{
-		if (Input.GetButtonDown("Fire1"))
+		if (Input.GetKeyDown("space"))
 		{
-			Rigidbody2D instantiated_bullet = Instantiate(bullet,transform.position, transform.rotation) as Rigidbody2D;
-			instantiated_bullet.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(new Vector2(0,speed));
-			Physics2D.IgnoreCollision(instantiated_bullet.GetComponent<Collider2D>(),gameObject.GetComponent<Collider2D>());
+			ShootBullet (bullet,speed);
 		}
 	}
+
 }

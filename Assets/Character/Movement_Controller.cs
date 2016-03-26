@@ -1,52 +1,69 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Movement_Controller : MonoBehaviour {
+public class Movement_Controller : BaseClass {
 
-	//sets the maximum speed
-	public float maximum_horizontal_speed = 10f;
-	public float init_angle = 0f;
-	public float delta_angle = 10f; //degrees
-	public Vector2 angle_range = new Vector2(-80f, 80f); //degrees
+	public float horizontal_speed = 0.1f;
 
-	private Rigidbody2D rigid_body;
-	private Vector2 initial_position;
+	//all in degrees
+	public float initial_angle = 0f;
+	public float delta_angle = 10f;
+	public float max_angle = 30f;
+	public float min_angle = -30f;
+
+	public float initial_position = 0f;
+	public float right_boundary = 6f;
+	public float left_boundary = -6f;
+
+	private float position;
 	private float angle;
 
-	// Use this for initialization
+	//PREWRITTEN
 	void Start () {
-		rigid_body = GetComponent<Rigidbody2D> ();
-		initial_position = rigid_body.position;
-		angle = init_angle;
+		SetColor (Color.white);
+		MoveTo (initial_position);
+		RotateTo (initial_angle);
 	}
 	
-	// Update is called once per frame
+	// FILL IN
 	void Update () {
-
-		float horizontal_input = Input.GetAxis ("Horizontal");
-		rigid_body.velocity = new Vector2 (horizontal_input * maximum_horizontal_speed,0);
-
-		if (Input.GetKeyDown ("z") && angle < angle_range[1])
+		if (Input.GetKeyDown ("z") && angle < max_angle)
 			RotateLeft ();
-		else if (Input.GetKeyDown ("x") && angle > angle_range[0])
+		if (Input.GetKeyDown ("x") && angle > min_angle)
 			RotateRight ();
+		if (Input.GetKey ("right") && position < right_boundary)
+			MoveRight ();
+		if (Input.GetKey ("left") && position > left_boundary)
+			MoveLeft ();
 		
-	}
-		
-	void RotateLeft() {
-		transform.Rotate (0f, 0f, delta_angle);
-		angle += delta_angle;
-	}
-		
-	void RotateRight() {
-		transform.Rotate (0f, 0f, -delta_angle);
-		angle -= delta_angle;
 	}
 
-	void EnemyHit(){
-		Scoreboard_Controller scoreboard = GameObject.Find("GameController_Object").GetComponent<Scoreboard_Controller>();
+	void EnemyCollided(){
+		Scoreboard_Controller scoreboard = GetScoreboard ();
 		scoreboard.LoseLife ();
-		rigid_body.position = initial_position;
+		//SetColor (Color.red);
+		MoveTo(initial_position);
+		//SetColor (Color.white);
+	}
+		
+	void MoveRight() {
+		position += horizontal_speed;
+		MoveTo (position);
+	}
+
+	void MoveLeft() {
+		position -= horizontal_speed;
+		MoveTo (position);
+	}
+
+	void RotateLeft() {
+		angle += delta_angle;
+		RotateTo (angle + delta_angle);
+	}
+
+	void RotateRight() {
+		angle -= delta_angle;
+		RotateTo (angle - delta_angle);
 	}
 
 }

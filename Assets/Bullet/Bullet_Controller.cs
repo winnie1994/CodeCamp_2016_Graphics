@@ -1,46 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bullet_Controller : MonoBehaviour {
-
-	private SpriteRenderer renderer;
+public class Bullet_Controller : BaseClass {
+	public Color initial_color = new Color (1f, 0.75f, 0.9f, 1.0f);
 
 	void Start () {
-		renderer = gameObject.GetComponent<SpriteRenderer> ();
-		Color initial_color = new Color (1f, 0.75f, 0.9f, 1.0f);
-		renderer.color = initial_color;
+		SetColor (initial_color);
 	}
 
 	void Update () {
 	
 	}
-	// Called when goes out of camera boundary
-	void OnBecameInvisible() {
-		//Remove object from game
-		Destroy (gameObject);
-	}
 
 	// Called when bullet hits something
 	void OnCollisionEnter2D(Collision2D collision) {
 
-		//See what type of object it hits
 		string tag = collision.gameObject.tag;
 
-		if (tag == "MainCharacter")return;
 		if (tag == "Enemy") {
-			Scoreboard_Controller scoreboard = GameObject.Find("GameController_Object").GetComponent<Scoreboard_Controller>();
-
-			collision.gameObject.SendMessage ("BulletHit", renderer.color);
+			collision.gameObject.SendMessage ("BulletCollided", GetColor());
+			Scoreboard_Controller scoreboard = GetScoreboard ();
 			scoreboard.AddToScore (10);
 			Destroy (gameObject);
 
 		}if (tag == "Bullet" || tag == "ColorBlock") {
 			Color collider_color = collision.gameObject.GetComponent<SpriteRenderer> ().color;
-			Color old_color = renderer.color;
-			Color new_color = Color.Lerp (old_color, collider_color, 0.5f);
-			new_color.a = 0.98f;
-			renderer.color = new_color;
+			Color old_color = GetColor();
+			Color new_color = MixColor(collider_color, old_color, 0.5f);
+			SetColor(new_color);
 		}
-
 	}
+
+	// Called when goes out of camera boundary
+	void OnBecameInvisible() {
+		Destroy (gameObject);
+	}
+
 }

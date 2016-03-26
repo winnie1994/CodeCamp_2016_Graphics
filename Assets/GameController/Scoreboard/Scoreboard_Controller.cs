@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Scoreboard_Controller : MonoBehaviour {
+public class Scoreboard_Controller : BaseClass {
 
 	public int score;
 	public int health;

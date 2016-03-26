@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class EnemySpawner_Level1 : MonoBehaviour {
+
 	public Rigidbody2D enemy;
 	public Vector2 spawn_range;
 	public int enemy_count;
@@ -10,6 +11,7 @@ public class EnemySpawner_Level1 : MonoBehaviour {
 	public float wave_interval;
 	public bool trigger_next_wave;
 	public float enemy_init_height;
+
 	void Start ()
 	{
 		trigger_next_wave = false;
