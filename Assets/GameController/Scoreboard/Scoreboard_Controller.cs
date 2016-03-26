@@ -19,9 +19,20 @@ public class Scoreboard_Controller : MonoBehaviour {
 		score += amount;
 		UpdateScore ();
 	}
-
+		
 	public void UpdateScore ()
 	{
 		gameObject.GetComponent<Text>().text = "Score: " + score;
 	}
+
+	public void LoseLife()
+	{
+		lives--;
+	}
+
+	public void GainLife()
+	{
+		lives++;
+	}
+
 }
