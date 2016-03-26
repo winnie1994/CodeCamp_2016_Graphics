@@ -7,7 +7,7 @@ public class Bullet_Controller : MonoBehaviour {
 
 	void Start () {
 		renderer = gameObject.GetComponent<SpriteRenderer> ();
-		Color initial_color = new Color (0.9f, 0.85f, 0.9f, 1.0f);
+		Color initial_color = new Color (1f, 0.75f, 0.9f, 1.0f);
 		renderer.color = initial_color;
 	}
 

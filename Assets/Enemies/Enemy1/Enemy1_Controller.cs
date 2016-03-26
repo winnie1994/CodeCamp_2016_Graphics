@@ -17,7 +17,25 @@ public class Enemy1_Controller : MonoBehaviour {
 
 	void BulletHit(Color bullet_color){
 		SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer> ();
-		renderer.color = bullet_color;
-		Destroy (gameObject, enemy_death_delay);
+		renderer.color = Color.yellow;
+		Destroy (gameObject, 0.1f);
 	}
+
+	// Called when enemy hits something
+	void OnCollisionEnter2D(Collision2D collision) {
+
+		//See what type of object it hits
+		string tag = collision.gameObject.tag;
+		if (tag == "MainCharacter"){
+			collision.gameObject.SendMessage ("EnemyHit");
+			Destroy (gameObject);
+
+		}if (tag == "Ground") {
+			SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer> ();
+			renderer.color = Color.red;
+			Destroy (gameObject,0.1f);
+		}
+
+	}
+
 }

@@ -10,16 +10,19 @@ public class Movement_Controller : MonoBehaviour {
 	public Vector2 angle_range = new Vector2(-80f, 80f); //degrees
 
 	private Rigidbody2D rigid_body;
+	private Vector2 initial_position;
 	private float angle;
 
 	// Use this for initialization
 	void Start () {
-		rigid_body = GetComponent<Rigidbody2D> ();	
+		rigid_body = GetComponent<Rigidbody2D> ();
+		initial_position = rigid_body.position;
 		angle = init_angle;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
 		float horizontal_input = Input.GetAxis ("Horizontal");
 		rigid_body.velocity = new Vector2 (horizontal_input * maximum_horizontal_speed,0);
 
@@ -39,4 +42,11 @@ public class Movement_Controller : MonoBehaviour {
 		transform.Rotate (0f, 0f, -delta_angle);
 		angle -= delta_angle;
 	}
+
+	void EnemyHit(){
+		Scoreboard_Controller scoreboard = GameObject.Find("GameController_Object").GetComponent<Scoreboard_Controller>();
+		scoreboard.LoseLife ();
+		rigid_body.position = initial_position;
+	}
+
 }
