@@ -13,8 +13,9 @@ public class Shooter_Controller : BaseClass {
 	// Fill In
 	void Update ()
 	{
-		if (Input.GetKeyDown("space"))
+		if (Input.GetKeyDown(KeyCode.Space))
 		{
+            print("SPACE");
 			ShootBullet (bullet,speed);
 		}
 	}
