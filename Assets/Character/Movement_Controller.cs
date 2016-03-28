@@ -41,9 +41,9 @@ public class Movement_Controller : BaseClass {
 	void EnemyCollided(){
 		Scoreboard_Controller scoreboard = GetScoreboard ();
 		scoreboard.LoseLife ();
-		//SetColor (Color.red);
-		MoveTo(initial_position);
-		//SetColor (Color.white);
+        SetTemporaryColor(Color.magenta, 0.5f);
+        position = initial_position;
+		MoveTo(position);   
 	}
 		
 	void MoveRight() {
@@ -58,12 +58,12 @@ public class Movement_Controller : BaseClass {
 
 	void RotateLeft() {
 		angle += delta_angle;
-		RotateTo (angle + delta_angle);
+		RotateTo (angle);
 	}
 
 	void RotateRight() {
 		angle -= delta_angle;
-		RotateTo (angle - delta_angle);
+		RotateTo (angle);
 	}
 
 }

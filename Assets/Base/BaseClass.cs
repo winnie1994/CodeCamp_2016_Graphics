@@ -8,6 +8,16 @@ public class BaseClass : MonoBehaviour {
 		if(renderer != null)renderer.color = color;	
 	}
 
+    public void SetTemporaryColor(Color color, float time) {
+        SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
+        if (renderer != null)
+        {
+            Color old_color = renderer.color;
+            renderer.color = color;
+            StartCoroutine(DelaySetColor(old_color, time));
+        }
+    }
+
 	public Color GetColor(){
 		SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer> ();
 		if(renderer!= null)return renderer.color;
@@ -39,13 +49,32 @@ public class BaseClass : MonoBehaviour {
 	{
 		Rigidbody2D instantiated_bullet = Instantiate(bullet,transform.position, transform.rotation) as Rigidbody2D;
 		instantiated_bullet.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(new Vector2(0,velocity));
-		Physics2D.IgnoreCollision(instantiated_bullet.GetComponent<Collider2D>(),gameObject.GetComponent<Collider2D>());
+        Collider2D collider1 = instantiated_bullet.GetComponent<Collider2D>();
+        Collider2D collider2 = gameObject.GetComponent<Collider2D>();
+        Physics2D.IgnoreCollision(collider1,collider2,true);
+        StartCoroutine(ReactivateCollision(0.8f,collider1,collider2));
+    }
 
-	}
+    public string GetTag(Collision2D collision) {
+        return collision.gameObject.tag;
+    }
 
 	public Scoreboard_Controller GetScoreboard(){
 		Scoreboard_Controller scoreboard = GameObject.Find("GameController_Object").GetComponent<Scoreboard_Controller>();
 		return scoreboard;
 	}
-	
+
+    IEnumerator ReactivateCollision(float waitTime,Collider2D collider1, Collider2D collider2)
+    {
+        yield return new WaitForSeconds(waitTime);
+        Physics2D.IgnoreCollision(collider1,collider2,false);
+
+    }
+
+    IEnumerator DelaySetColor(Color color, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        SetColor(color);
+    }
+
 }
