@@ -2,29 +2,31 @@
 using System.Collections;
 
 public class Bullet_Controller : BaseClass {
+	
 	public Color initial_color = new Color (1f, 0.75f, 0.9f, 1.0f);
 
-	void Start () {
+	void Start () 
+	{
 		SetColor (initial_color);
 	}
 
-	void Update () {
+	void Update () 
+	{
 	
 	}
 
 	// Called when bullet hits something
-	void OnCollisionEnter2D(Collision2D collision) {
-
+	void OnCollisionEnter2D(Collision2D collision) 
+	{
 		string tag = collision.gameObject.tag;
 
 		if (tag == "Enemy") {
 			collision.gameObject.SendMessage ("BulletCollided", GetColor());
-			Scoreboard_Controller scoreboard = GetScoreboard ();
-			scoreboard.AddToScore (10);
-			Destroy (gameObject);
+			AddToScore (10);
+			Remove();
 
 		}if (tag == "Bullet" || tag == "ColorBlock") {
-			Color collider_color = collision.gameObject.GetComponent<SpriteRenderer> ().color;
+			Color collider_color =GetColliderColor(collision);
 			Color old_color = GetColor();
 			Color new_color = MixColor(collider_color, old_color, 0.5f);
 			SetColor(new_color);
@@ -32,8 +34,9 @@ public class Bullet_Controller : BaseClass {
 	}
 
 	// Called when goes out of camera boundary
-	void OnBecameInvisible() {
-		Destroy (gameObject);
+	void OnBecameInvisible() 
+	{
+		Remove();
 	}
 
 }

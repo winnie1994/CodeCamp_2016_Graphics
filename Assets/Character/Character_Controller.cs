@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Movement_Controller : BaseClass {
+public class Character_Controller : BaseClass {
 
 	public float horizontal_speed = 0.1f;
 
@@ -15,53 +15,68 @@ public class Movement_Controller : BaseClass {
 	public float right_boundary = 6f;
 	public float left_boundary = -6f;
 
+	public Rigidbody2D bullet;
+	public float bullet_speed = 20;
+
 	private float position;
 	private float angle;
 
+
 	//PREWRITTEN
-	void Start () {
+	void Start () 
+	{
 		SetColor (Color.white);
 		MoveTo (initial_position);
 		RotateTo (initial_angle);
 	}
 	
 	// FILL IN
-	void Update () {
+	void Update () 
+	{
 		if (Input.GetKeyDown ("z") && angle < max_angle)
 			RotateLeft ();
+		
 		if (Input.GetKeyDown ("x") && angle > min_angle)
 			RotateRight ();
+
+		if (Input.GetKeyDown ("space"))
+			ShootBullet (bullet, bullet_speed);
+
 		if (Input.GetKey ("right") && position < right_boundary)
 			MoveRight ();
+
 		if (Input.GetKey ("left") && position > left_boundary)
 			MoveLeft ();
-		
 	}
 
-	void EnemyCollided(){
-		Scoreboard_Controller scoreboard = GetScoreboard ();
-		scoreboard.LoseLife ();
+	void EnemyCollided()
+	{
+		LoseLife ();
         SetTemporaryColor(Color.magenta, 0.5f);
         position = initial_position;
 		MoveTo(position);   
 	}
 		
-	void MoveRight() {
+	void MoveRight() 
+	{
 		position += horizontal_speed;
 		MoveTo (position);
 	}
 
-	void MoveLeft() {
+	void MoveLeft() 
+	{
 		position -= horizontal_speed;
 		MoveTo (position);
 	}
 
-	void RotateLeft() {
+	void RotateLeft() 
+	{
 		angle += delta_angle;
 		RotateTo (angle);
 	}
 
-	void RotateRight() {
+	void RotateRight() 
+	{
 		angle -= delta_angle;
 		RotateTo (angle);
 	}

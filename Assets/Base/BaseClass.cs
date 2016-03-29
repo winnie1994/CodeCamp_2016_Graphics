@@ -3,12 +3,14 @@ using System.Collections;
 
 public class BaseClass : MonoBehaviour {
 
-	public void SetColor(Color color){
+	public void SetColor(Color color)
+	{
 		SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer> ();
 		if(renderer != null)renderer.color = color;	
 	}
 
-    public void SetTemporaryColor(Color color, float time) {
+    public void SetTemporaryColor(Color color, float time)
+	{
         SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
         if (renderer != null)
         {
@@ -18,28 +20,40 @@ public class BaseClass : MonoBehaviour {
         }
     }
 
-	public Color GetColor(){
+	public Color GetColor()
+	{
 		SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer> ();
 		if(renderer!= null)return renderer.color;
 		return Color.white;
 	}
 
-	public Color MixColor(Color color1, Color color2, float weight){
+	public Color GetColliderColor(Collision2D collision)
+	{
+		SpriteRenderer renderer = collision.gameObject.GetComponent<SpriteRenderer> ();
+		if(renderer!= null)return renderer.color;
+		return Color.white;
+	}
+
+	public Color MixColor(Color color1, Color color2, float weight)
+	{
 		Color new_color = Color.Lerp (color1, color2, weight);
 		new_color.a = 1f;
 		return new_color;
 	}
 
-	public void Rotate(float x){
+	public void Rotate(float x)
+	{
 		transform.Rotate (0f, 0f, x);
 	}
 
-	public void RotateTo(float x){
+	public void RotateTo(float x)
+	{
 		transform.rotation = Quaternion.identity;
 		transform.Rotate (0f, 0f, x);
 	}
 
-	public void MoveTo(float x){
+	public void MoveTo(float x)
+	{
 		Vector2 new_position = transform.position;
 		new_position.x = x;
 		transform.position = new_position;
@@ -55,13 +69,37 @@ public class BaseClass : MonoBehaviour {
         StartCoroutine(ReactivateCollision(0.8f,collider1,collider2));
     }
 
-    public string GetTag(Collision2D collision) {
+    public string GetTag(Collision2D collision)
+	{
         return collision.gameObject.tag;
     }
 
-	public Scoreboard_Controller GetScoreboard(){
+	public Scoreboard_Controller GetScoreboard()
+	{
 		Scoreboard_Controller scoreboard = GameObject.Find("GameController_Object").GetComponent<Scoreboard_Controller>();
 		return scoreboard;
+	}
+
+	public void AddToScore(int i)
+	{
+		Scoreboard_Controller scoreboard = GetScoreboard ();
+		scoreboard.AddToScore (i);
+	}
+
+	public void LoseLife()
+	{
+		Scoreboard_Controller scoreboard = GetScoreboard ();
+		scoreboard.LoseLife ();
+	}
+
+	public void Remove()
+	{
+		Destroy (gameObject);
+	}
+
+	public void RemoveAfterDelay(float t)
+	{
+		Destroy (gameObject,t);
 	}
 
     IEnumerator ReactivateCollision(float waitTime,Collider2D collider1, Collider2D collider2)
