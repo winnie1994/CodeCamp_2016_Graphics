@@ -12,20 +12,21 @@ public class Bullet_Controller : BaseClass {
 
 	void Update () 
 	{
-	
+
 	}
 
 	// Called when bullet hits something
 	void OnCollisionEnter2D(Collision2D collision) 
 	{
-		string tag = collision.gameObject.tag;
+		string tag = GetTag(collision);
 
 		if (tag == "Enemy") {
-			collision.gameObject.SendMessage ("BulletCollided", GetColor());
+            RemoveEnemy(collision);
 			AddToScore (10);
 			Remove();
 
-		}if (tag == "Bullet" || tag == "ColorBlock") {
+		}
+        if (tag == "Bullet" || tag == "ColorBlock") {
 			Color collider_color =GetColliderColor(collision);
 			Color old_color = GetColor();
 			Color new_color = MixColor(collider_color, old_color, 0.5f);

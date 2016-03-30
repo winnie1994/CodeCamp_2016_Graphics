@@ -41,17 +41,6 @@ public class BaseClass : MonoBehaviour {
 		return new_color;
 	}
 
-	public void Rotate(float x)
-	{
-		transform.Rotate (0f, 0f, x);
-	}
-
-	public void RotateTo(float x)
-	{
-		transform.rotation = Quaternion.identity;
-		transform.Rotate (0f, 0f, x);
-	}
-
 	public void MoveTo(float x)
 	{
 		Vector2 new_position = transform.position;
@@ -101,6 +90,11 @@ public class BaseClass : MonoBehaviour {
 	{
 		Destroy (gameObject,t);
 	}
+
+    public void RemoveEnemy(Collision2D enemy)
+    {
+        enemy.gameObject.SendMessage("BulletCollided");
+    }
 
     public void SetEnemySpeedRange(int min, int max)
     {

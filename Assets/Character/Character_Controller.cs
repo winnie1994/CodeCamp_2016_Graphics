@@ -25,22 +25,15 @@ public class Character_Controller : BaseClass {
 	//PREWRITTEN
 	void Start () 
 	{
-        SetEnemySpeedRange(1, 2);
+        SetEnemySpeedRange(1, 3);
 		SetColor (Color.white);
 		MoveTo (initial_position);
-		RotateTo (initial_angle);
 	}
 	
 	// FILL IN
 	void Update () 
 	{
-		if (Input.GetKeyDown ("z") && angle < max_angle)
-			RotateLeft ();
-		
-		if (Input.GetKeyDown ("x") && angle > min_angle)
-			RotateRight ();
-
-		if (Input.GetKey ("space"))
+		if (Input.GetKeyDown ("space"))
 			ShootBullet (bullet, bullet_speed);
 
 		if (Input.GetKey ("right") && position < right_boundary)
@@ -51,37 +44,23 @@ public class Character_Controller : BaseClass {
 	}
 
 	void EnemyCollided()
-	{
-        
+	{    
 		LoseLife ();
         SetTemporaryColor(Color.magenta, 0.5f);
         position = initial_position;
-		MoveTo(position); 
-        
+		MoveTo(position);        
 	}
 		
 	void MoveRight() 
 	{
-		position += horizontal_speed;
+		position = position + horizontal_speed;
 		MoveTo (position);
 	}
 
 	void MoveLeft() 
 	{
-		position -= horizontal_speed;
+		position = position - horizontal_speed;
 		MoveTo (position);
-	}
-
-	void RotateLeft() 
-	{
-		angle += delta_angle;
-		RotateTo (angle);
-	}
-
-	void RotateRight() 
-	{
-		angle -= delta_angle;
-		RotateTo (angle);
 	}
 
 }

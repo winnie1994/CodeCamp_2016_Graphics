@@ -13,7 +13,7 @@ public class Enemy_Controller : BaseClass {
 	
 	}
 
-	void BulletCollided(Color bullet_color)
+	void BulletCollided()
 	{
 		SetColor (Color.yellow);
 		RemoveAfterDelay(0.1f);
