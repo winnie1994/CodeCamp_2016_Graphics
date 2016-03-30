@@ -20,10 +20,19 @@ public class Character_Controller : BaseClass {
     //These are colors we use
     public Color initial_color;
 
+	public Sprite sprite_default;
+	public Sprite sprite_on_enemy_hit;
+
 	private float position;
+
+	private SpriteRenderer sprite_renderer;
+
 
 	void Start () 
 	{
+		sprite_renderer = GetComponent<SpriteRenderer> ();
+		if (sprite_renderer.sprite == null)
+			sprite_renderer.sprite = sprite_default;
         SetEnemySpeedRange(1, 3);
 		SetColor (initial_color);
 		MoveTo (initial_position);
@@ -43,12 +52,24 @@ public class Character_Controller : BaseClass {
         /*We lose a life*/
         LoseLife();
         /*We flash magenta for half a second*/
-        SetTemporaryColor(Color.magenta, 0.5f);
+		/*Display sad face*/
+		StartCoroutine(ChangeDisplayOnEnemyHit());
+
+        //SetTemporaryColor(Color.magenta, 0.5f);
         /*We move to our starting position*/
-        position = initial_position;
-        MoveTo(position);
+		//To be consistent with losing life from enemy hitting ground, do not reset position
+        //position = initial_position;
+        //MoveTo(position);
     }
 		
+	IEnumerator ChangeDisplayOnEnemyHit()
+	{
+		Debug.Log ("entered here");
+		sprite_renderer.sprite = sprite_on_enemy_hit;
+		yield return new WaitForSeconds(0.5f);
+		sprite_renderer.sprite = sprite_default;
+	}
+
 	void MoveRight() 
 	{
         /*How can we move to the right? Hint: Look at the EnemyCollided code :) */

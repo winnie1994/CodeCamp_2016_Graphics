@@ -33,6 +33,7 @@ public class Enemy_Controller : BaseClass {
 
 		}if (tag == "Ground") {
             EnemyHit(collision);
+			GameObject.FindWithTag("MainCharacter").SendMessage("ChangeDisplayOnEnemyHit");
 			SetColor (color_on_hit_ground);
 			RemoveAfterDelay(0.1f);
         }
