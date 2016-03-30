@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Movement_Controller : BaseClass {
+public class Character_Controller : BaseClass {
 
 	public float max_speed = 10f;
 
@@ -15,11 +15,16 @@ public class Movement_Controller : BaseClass {
 	public float right_boundary = 6f;
 	public float left_boundary = -6f;
 
+	public Rigidbody2D bullet;
+	public float bullet_speed = 20;
+
 	private float position;
 	private float angle;
 
+
 	//PREWRITTEN
-	void Start () {
+	void Start () 
+	{
 		SetColor (Color.white);
 		MoveTo (initial_position);
 		RotateTo (initial_angle);
@@ -32,14 +37,15 @@ public class Movement_Controller : BaseClass {
 		Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D> ();
 		rb.velocity = new Vector2(max_speed*horizontal_input, max_speed*vertical_input);
 		
+		if (Input.GetKeyDown ("space"))
+			ShootBullet (bullet, bullet_speed);
 	}
 
-	void EnemyCollided(){
-		Scoreboard_Controller scoreboard = GetScoreboard ();
-		scoreboard.LoseLife ();
+	void EnemyCollided()
+	{
+		LoseLife ();
         SetTemporaryColor(Color.magenta, 0.5f);
         position = initial_position;
 		MoveTo(position);   
 	}
-
 }
