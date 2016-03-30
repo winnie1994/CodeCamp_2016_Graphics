@@ -63,12 +63,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Base\BaseClass.cs" />
     <Compile Include="Assets\Bullet\Bullet_Controller.cs" />
     <Compile Include="Assets\Character\Character_Controller.cs" />
-    <Compile Include="Assets\Enemies\Enemy_Controller.cs" />
+    <Compile Include="Assets\Enemy\Enemy_Controller.cs" />
+    <Compile Include="Assets\Environment\Ground\Ground_Controller.cs" />
     <Compile Include="Assets\GameController\Scoreboard\Scoreboard_Controller.cs" />
     <Compile Include="Assets\GameController\Spawner\EnemySpawner.cs" />
+    <Compile Include="Assets\Wrappers\BaseClass.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

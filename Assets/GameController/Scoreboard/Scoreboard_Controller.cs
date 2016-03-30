@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Scoreboard_Controller : MonoBehaviour {
@@ -31,6 +32,7 @@ public class Scoreboard_Controller : MonoBehaviour {
 	{
 		lives--;
 		UpdateLives ();
+        if (lives <= 0) SceneManager.LoadScene("GameOver");
 	}
 
 	public void GainLife()

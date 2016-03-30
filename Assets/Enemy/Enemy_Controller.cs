@@ -3,17 +3,20 @@ using System.Collections;
 
 public class Enemy_Controller : BaseClass {
 
-	void Start () 
+    public Color initial_color;
+    public Color color_on_hit_ground;
+
+    void Start()
+    {
+        SetColor(initial_color);
+    }
+
+    void Update () 
 	{
 	
 	}
 
-	void Update () 
-	{
-	
-	}
-
-	void BulletCollided()
+	void HitByBullet()
 	{
 		SetColor (Color.yellow);
 		RemoveAfterDelay(0.1f);
@@ -25,13 +28,14 @@ public class Enemy_Controller : BaseClass {
 		string tag = collision.gameObject.tag;
 
 		if (tag == "MainCharacter"){
-			collision.gameObject.SendMessage ("EnemyCollided");
+            EnemyHit(collision);
 			Remove ();
 
 		}if (tag == "Ground") {
-			SetColor (Color.red);
+            EnemyHit(collision);
+			SetColor (color_on_hit_ground);
 			RemoveAfterDelay(0.1f);
-		}
+        }
 
-	}
+    }
 }
