@@ -47,8 +47,7 @@
   <ItemGroup>
      <Compile Include="Assets\Base\BaseClass.cs" />
      <Compile Include="Assets\Bullet\Bullet_Controller.cs" />
-     <Compile Include="Assets\Character\Movement_Controller.cs" />
-     <Compile Include="Assets\Character\Shooter_Controller.cs" />
+     <Compile Include="Assets\Character\Character_Controller.cs" />
      <Compile Include="Assets\Enemies\Enemy1\Enemy1_Controller.cs" />
      <Compile Include="Assets\GameController\Level 1\EnemySpawner_Level1.cs" />
      <Compile Include="Assets\GameController\Scoreboard\Scoreboard_Controller.cs" />
