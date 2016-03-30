@@ -3,64 +3,64 @@ using System.Collections;
 
 public class Character_Controller : BaseClass {
 
+    //These are the parameters for character movement!
 	public float horizontal_speed = 0.1f;
-
-	//all in degrees
-	public float initial_angle = 0f;
-	public float delta_angle = 10f;
-	public float max_angle = 30f;
-	public float min_angle = -30f;
-
+    //Character starts here
 	public float initial_position = 0f;
+
+    //These are the boundary/limits to where our character may move
 	public float right_boundary = 6f;
 	public float left_boundary = -6f;
 
+    //This is the bullet we'll be shooting
 	public Rigidbody2D bullet;
+    //This is our bullet speed
 	public float bullet_speed = 20;
 
+    //These are colors we use
+    public Color initial_color;
+
 	private float position;
-	private float angle;
 
-
-	//PREWRITTEN
 	void Start () 
 	{
         SetEnemySpeedRange(1, 3);
-		SetColor (Color.white);
+		SetColor (initial_color);
 		MoveTo (initial_position);
 	}
 	
-	// FILL IN
 	void Update () 
 	{
-		if (Input.GetKeyDown ("space"))
-			ShootBullet (bullet, bullet_speed);
+        /*What happens when we press controls? We need to move and shoot. Write this code!*/
+		if (Input.GetKey ("right") && position < right_boundary) MoveRight ();
+		if (Input.GetKey ("left") && position > left_boundary) MoveLeft ();
+        if (Input.GetKeyDown("space")) ShootBullet(bullet, bullet_speed);
+    }
 
-		if (Input.GetKey ("right") && position < right_boundary)
-			MoveRight ();
-
-		if (Input.GetKey ("left") && position > left_boundary)
-			MoveLeft ();
-	}
-
-	void EnemyCollided()
-	{    
-		LoseLife ();
+	void HitByEnemy()
+	{
+        /*What happens when we hit an enemy?*/
+        /*We lose a life*/
+        LoseLife();
+        /*We flash magenta for half a second*/
         SetTemporaryColor(Color.magenta, 0.5f);
+        /*We move to our starting position*/
         position = initial_position;
-		MoveTo(position);        
-	}
+        MoveTo(position);
+    }
 		
 	void MoveRight() 
 	{
-		position = position + horizontal_speed;
-		MoveTo (position);
-	}
+        /*How can we move to the right? Hint: Look at the EnemyCollided code :) */
+        position += horizontal_speed;
+        MoveTo(position);
+    }
 
 	void MoveLeft() 
 	{
-		position = position - horizontal_speed;
-		MoveTo (position);
-	}
+        /*How can we move to the left? Hint: Look at the EnemyCollided code :) */
+        position -= horizontal_speed;
+        MoveTo(position);
+    }
 
 }
