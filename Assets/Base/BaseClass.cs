@@ -102,6 +102,13 @@ public class BaseClass : MonoBehaviour {
 		Destroy (gameObject,t);
 	}
 
+    public void SetEnemySpeedRange(int min, int max)
+    {
+        EnemySpawner enemies = GameObject.Find("GameController_Object").GetComponent<EnemySpawner>();
+        enemies.max_speed = max;
+        enemies.min_speed = min;
+    }
+
     IEnumerator ReactivateCollision(float waitTime,Collider2D collider1, Collider2D collider2)
     {
         yield return new WaitForSeconds(waitTime);

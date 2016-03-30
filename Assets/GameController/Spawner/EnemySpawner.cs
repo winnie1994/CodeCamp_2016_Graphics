@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemySpawner_Level1 : MonoBehaviour {
+public class EnemySpawner : MonoBehaviour {
 
 	public Rigidbody2D enemy;
 	public Vector2 spawn_range;
@@ -11,6 +11,9 @@ public class EnemySpawner_Level1 : MonoBehaviour {
 	public float wave_interval;
 	public bool trigger_next_wave;
 	public float enemy_init_height;
+
+    public float max_speed = 5;
+    public float min_speed = 1;
 
 	void Start ()
 	{
@@ -28,7 +31,7 @@ public class EnemySpawner_Level1 : MonoBehaviour {
 				Vector2 spawn_position = new Vector2 (Random.Range (-spawn_range.x, spawn_range.x), enemy_init_height);
 				Quaternion spawn_rotation = Quaternion.AngleAxis(Random.Range(0,360), Vector3.forward);
 				Rigidbody2D instantiated_enemy = Instantiate (enemy, spawn_position,spawn_rotation) as Rigidbody2D;
-				instantiated_enemy.velocity = transform.TransformDirection(new Vector2(0, Random.Range(-1, -5)));
+				instantiated_enemy.velocity = transform.TransformDirection(new Vector2(0, -1*Random.Range(min_speed, max_speed)));
 				yield return new WaitForSeconds (spawn_interval);
 			}
 			yield return new WaitForSeconds (wave_interval);

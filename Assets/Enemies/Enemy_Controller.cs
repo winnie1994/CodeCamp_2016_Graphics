@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Enemy1_Controller : BaseClass {
+public class Enemy_Controller : BaseClass {
 
 	void Start () 
 	{
