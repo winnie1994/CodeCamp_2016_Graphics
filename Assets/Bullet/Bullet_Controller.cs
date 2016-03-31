@@ -16,10 +16,6 @@ public class Bullet_Controller : BaseClass {
 
 		if (tag == "Enemy") {
             /*What do we need to do when we hit an enemy?*/
-            SetTemporaryColor(flash_color, 0.2f);
-            Kill(collision);
-            AddToScore(10);
-            RemoveAfterDelay(0.2f);
 		}
        
     }

@@ -22,8 +22,6 @@ public class Character_Controller : BaseClass {
 
 	private float position;
 
-	private SpriteRenderer sprite_renderer;
-
 
 	void Start () 
 	{
@@ -34,9 +32,7 @@ public class Character_Controller : BaseClass {
 	void Update () 
 	{
         /*What happens when we press controls? We need to move and shoot. Write this code!*/
-		if (Input.GetKey ("right") && position < right_boundary) MoveRight ();
-		if (Input.GetKey ("left") && position > left_boundary) MoveLeft ();
-        if (Input.GetKeyDown("space")) ShootBullet(bullet, bullet_speed);
+		if (Input.GetKey ("right")) MoveRight ();
     }
 
 	void HitByEnemy()
@@ -54,15 +50,11 @@ public class Character_Controller : BaseClass {
 	void MoveRight() 
 	{
         /*How can we move to the right? Hint: Look at the EnemyCollided code :) */
-        position += horizontal_speed;
-        MoveTo(position);
     }
 
 	void MoveLeft() 
 	{
         /*How can we move to the left? Hint: Look at the EnemyCollided code :) */
-        position -= horizontal_speed;
-        MoveTo(position);
     }
 
     void Flash()
