@@ -3,12 +3,10 @@ using System.Collections;
 
 public class Enemy_Controller : BaseClass {
 
-    public Color initial_color;
-    public Color color_on_hit_ground;
+    public Color flash_color;
 
     void Start()
     {
-        SetColor(initial_color);
     }
 
     void Update () 
@@ -18,23 +16,25 @@ public class Enemy_Controller : BaseClass {
 
 	void HitByBullet()
 	{
-		SetColor (Color.yellow);
+		SetColor (flash_color);
 		RemoveAfterDelay(0.1f);
 	}
 		
 	void OnCollisionEnter2D(Collision2D collision) 
 	{
 
-		string tag = collision.gameObject.tag;
+		string tag = GetTag(collision);
 
 		if (tag == "MainCharacter"){
             EnemyHit(collision);
 			Remove ();
 
 		}if (tag == "Ground") {
-            EnemyHit(collision);
-			SetColor (color_on_hit_ground);
-			RemoveAfterDelay(0.1f);
+            LoseLife();
+            RunFunction("Ground", "Flash");
+            RunFunction("MainCharacter", "Flash");
+			SetColor (flash_color);
+			RemoveAfterDelay(0.2f);
         }
 
     }

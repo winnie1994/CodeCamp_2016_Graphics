@@ -2,12 +2,11 @@
 using System.Collections;
 
 public class Ground_Controller : BaseClass {
-    public Color overlay_color_on_enemy_hit;
-    void HitByEnemy()
+    public Color overlay_flash_color;
+    void Flash()
     {
-        LoseLife();
         Color old_color = GetColor();
-        Color new_color = MixColor(overlay_color_on_enemy_hit, old_color, 0.5f);
+        Color new_color = MixColor(overlay_flash_color, old_color, 0.5f);
         SetTemporaryColor(new_color, 0.2f);
     }
 }

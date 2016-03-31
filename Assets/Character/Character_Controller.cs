@@ -17,15 +17,17 @@ public class Character_Controller : BaseClass {
     //This is our bullet speed
 	public float bullet_speed = 20;
 
-    //These are colors we use
-    public Color initial_color;
+    public Color flash_color;
+	public Sprite flash_sprite;
 
 	private float position;
+
+	private SpriteRenderer sprite_renderer;
+
 
 	void Start () 
 	{
         SetEnemySpeedRange(1, 3);
-		SetColor (initial_color);
 		MoveTo (initial_position);
 	}
 	
@@ -42,13 +44,13 @@ public class Character_Controller : BaseClass {
         /*What happens when we hit an enemy?*/
         /*We lose a life*/
         LoseLife();
-        /*We flash magenta for half a second*/
-        SetTemporaryColor(Color.magenta, 0.5f);
+        /*We flash our character*/
+        Flash();
         /*We move to our starting position*/
-        position = initial_position;
-        MoveTo(position);
+        //position = initial_position;
+        //MoveTo(position);
     }
-		
+
 	void MoveRight() 
 	{
         /*How can we move to the right? Hint: Look at the EnemyCollided code :) */
@@ -61,6 +63,12 @@ public class Character_Controller : BaseClass {
         /*How can we move to the left? Hint: Look at the EnemyCollided code :) */
         position -= horizontal_speed;
         MoveTo(position);
+    }
+
+    void Flash()
+    {
+        SetTemporaryColor(flash_color, 0.2f);
+        SetTemporarySprite(flash_sprite,0.2f);
     }
 
 }

@@ -1,18 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+public delegate void FloatParamFn(float f);
 public class BaseClass : MonoBehaviour
 {
     private bool incolorchange = false;
+    private bool inspritechange = false;
+
     public void SetColor(Color color)
     {
         SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
-        if (renderer != null) renderer.color = color;
-    }
-
-    public void SetColliderColor(Collision2D collision, Color color)
-    {
-        SpriteRenderer renderer = collision.gameObject.GetComponent<SpriteRenderer>();
         if (renderer != null) renderer.color = color;
     }
 
@@ -47,6 +45,24 @@ public class BaseClass : MonoBehaviour
         Color new_color = Color.Lerp(color1, color2, weight);
         new_color.a = 1f;
         return new_color;
+    }
+
+    public void SetSprite(Sprite sprite)
+    {
+        SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
+        if (renderer != null) renderer.sprite = sprite;
+    }
+
+    public void SetTemporarySprite(Sprite sprite, float time)
+    {
+        SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
+        if (renderer != null && !inspritechange)
+        {
+            inspritechange = true;
+            Sprite old_sprite = renderer.sprite;
+            renderer.sprite = sprite;
+            StartCoroutine(DelaySetSprite(old_sprite, time));
+        }
     }
 
     public void MoveTo(float x)
@@ -109,13 +125,16 @@ public class BaseClass : MonoBehaviour
         collision.gameObject.SendMessage("HitByEnemy");
     }
 
-
-
     public void SetEnemySpeedRange(int min, int max)
     {
         EnemySpawner enemies = GameObject.Find("GameController_Object").GetComponent<EnemySpawner>();
         enemies.max_speed = max;
         enemies.min_speed = min;
+    }
+
+    public void RunFunction(string objectname, string functionname)
+    {
+        GameObject.FindWithTag(objectname).SendMessage(functionname);
     }
 
     IEnumerator ReactivateCollision(float waitTime, Collider2D collider1, Collider2D collider2)
@@ -130,5 +149,12 @@ public class BaseClass : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         SetColor(color);
         incolorchange = false;
+    }
+
+    IEnumerator DelaySetSprite(Sprite sprite, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        SetSprite(sprite);
+        inspritechange = false;
     }
 }
