@@ -3,11 +3,11 @@ using System.Collections;
 
 public class Bullet_Controller : BaseClass {
 	
-	public Color initial_color;
+	public Color flash_color;
+    public Sprite flash_sprite;
 
 	void Start () 
 	{
-		SetColor (initial_color);
 	}
 
 	// Called when bullet hits something
@@ -19,7 +19,8 @@ public class Bullet_Controller : BaseClass {
             /*What do we need to do when we hit an enemy?*/
             Kill(collision);
             AddToScore(10);
-            Remove();
+            SetColor(flash_color);
+            RemoveAfterDelay(0.1f);
 		}
        
     }

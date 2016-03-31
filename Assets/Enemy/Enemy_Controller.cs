@@ -3,12 +3,10 @@ using System.Collections;
 
 public class Enemy_Controller : BaseClass {
 
-    public Color initial_color;
-    public Color color_on_hit_ground;
+    public Color flash_color;
 
     void Start()
     {
-        SetColor(initial_color);
     }
 
     void Update () 
@@ -18,7 +16,7 @@ public class Enemy_Controller : BaseClass {
 
 	void HitByBullet()
 	{
-		SetColor (Color.yellow);
+		SetColor (flash_color);
 		RemoveAfterDelay(0.1f);
 	}
 		
@@ -33,8 +31,8 @@ public class Enemy_Controller : BaseClass {
 
 		}if (tag == "Ground") {
             EnemyHit(collision);
-			GameObject.FindWithTag("MainCharacter").SendMessage("ChangeDisplayOnEnemyHit");
-			SetColor (color_on_hit_ground);
+            RunFunction("MainCharacter", "Flash");
+			SetColor (flash_color);
 			RemoveAfterDelay(0.1f);
         }
 
