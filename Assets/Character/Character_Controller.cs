@@ -18,23 +18,13 @@ public class Character_Controller : BaseClass {
 	public float bullet_speed = 20;
 
     //These are colors we use
-    public Color initial_color;
-
-	public Sprite sprite_default;
-	public Sprite sprite_on_enemy_hit;
-
+    public Color flash_color;
+    public Sprite flash_sprite;
 	private float position;
-
-	private SpriteRenderer sprite_renderer;
-
 
 	void Start () 
 	{
-		sprite_renderer = GetComponent<SpriteRenderer> ();
-		if (sprite_renderer.sprite == null)
-			sprite_renderer.sprite = sprite_default;
         SetEnemySpeedRange(1, 3);
-		SetColor (initial_color);
 		MoveTo (initial_position);
 	}
 	
@@ -52,24 +42,12 @@ public class Character_Controller : BaseClass {
         /*We lose a life*/
         LoseLife();
         /*We flash magenta for half a second*/
-		/*Display sad face*/
-		StartCoroutine(ChangeDisplayOnEnemyHit());
-
-        //SetTemporaryColor(Color.magenta, 0.5f);
+        Flash();
         /*We move to our starting position*/
-		//To be consistent with losing life from enemy hitting ground, do not reset position
         //position = initial_position;
         //MoveTo(position);
     }
 		
-	IEnumerator ChangeDisplayOnEnemyHit()
-	{
-		Debug.Log ("entered here");
-		sprite_renderer.sprite = sprite_on_enemy_hit;
-		yield return new WaitForSeconds(0.5f);
-		sprite_renderer.sprite = sprite_default;
-	}
-
 	void MoveRight() 
 	{
         /*How can we move to the right? Hint: Look at the EnemyCollided code :) */
@@ -82,6 +60,13 @@ public class Character_Controller : BaseClass {
         /*How can we move to the left? Hint: Look at the EnemyCollided code :) */
         position -= horizontal_speed;
         MoveTo(position);
+    }
+
+    void Flash()
+    {
+        SetTemporaryColor(flash_color, 0.5f);
+        SetTemporarySprite(flash_sprite, 0.5f);
+
     }
 
 }
